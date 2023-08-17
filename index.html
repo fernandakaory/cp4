@@ -23,9 +23,9 @@
 
                 <label for="importancia">Importancia</label>
                 <select name="importancia" id="idImportancia">
-                    <option value="alta">Alta</option>
-                    <option value="media">Média</option>
-                    <option value="baixa">Baixa</option>   
+                    <option value="1">1-Baixa</option>
+                    <option value="2">2-Média</option>   
+                    <option value="3">3-Alta</option>
                 </select>
 
                 <!-- <input type="submit" id="btnAdiciona" value="Adicionar"> -->
@@ -36,6 +36,7 @@
     </div>
     <table id="listaDeTarefas">
         <h2>Tabela de tarefas</h2>
+        <button id="btnOrdenar">Ordenar por Importância</button>
         <thead>
             <tr id="cabecalho">
                 <th>Descrição</th>
