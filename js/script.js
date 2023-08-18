@@ -19,8 +19,8 @@ btnAddTarefa.addEventListener("click",(evento)=>{
         autor: autor.value,
         departamento: departamento.value,
         importancia: importancia.value,
-        valor: null, // Definindo o valor como nulo
-        duracao: null, // Definindo a duração como nula
+        valor: "Valor não definido", // Definindo o valor como nulo
+        duracao: "Duração não definida", // Definindo a duração como nula
     };
 
     arrayTarefas.push(novaTarefa)
@@ -31,30 +31,38 @@ btnAddTarefa.addEventListener("click",(evento)=>{
     esvaziaCampos();
 })
 
+//quando o botao ordenar for clicado, cria apenas a descrição
 const btnOrdenar = document.getElementById("btnOrdenar");
 
 btnOrdenar.addEventListener("click", (evento) => {
     evento.preventDefault();
     ordenarPorImportancia(arrayTarefas);
-    criaCelula(arrayTarefas);
+    criaApenasDescricao(arrayTarefas);
 });
 
 
+
+
+//FUNÇÔES
 function ordenarPorImportancia(array) {
     array.sort((a, b) => {
-        return b.importancia - a.importancia;
+       const valorA = a.importancia.split("-");
+       const valorB = b.importancia.split("-");
+       //nesse ordem pois quero em decrescente
+       return parseInt(valorB[0]) - parseInt(valorA[0])
     });
 }
 
+
 //função para criar celula inteira de tarefa
+//estou usando os botoes dentro do foreach porque dai eu não preciso especificar qual item eu quero manipular
 function criaCelula(arrayTarefas) {
     tbody.innerHTML = ""
 
     //o objeto e seu indice como parametro. cada objeto recebe um indeice
     arrayTarefas.forEach((objeto, index) => {
         let novaLinha = document.createElement("tr")
-        // let btnExcluir = document.createElement("button");
-        // btnExcluir.textContent = "Excluir"
+      
         let btnConcluir = document.createElement("button");
         btnConcluir.textContent = "Concluído"
         let btnValor = document.createElement("button");
@@ -68,36 +76,16 @@ function criaCelula(arrayTarefas) {
         novaLinha.appendChild(criaElemento(objeto.departamento,"td"));
         novaLinha.appendChild(criaElemento(objeto.importancia,"td"));
 
-           // Verificar se o objeto da tarefa já possui um valor para 'valor'
-           if (objeto.valor) {
-            // Criar uma célula adicional para exibir o valor
-            let valorCelula = document.createElement("td");
-            valorCelula.textContent = `Valor: ${objeto.valor}`;
-            novaLinha.appendChild(valorCelula);
-        }
-        
-        // Verificar se o objeto da tarefa já possui um valor para 'duracao'
-        if (objeto.duracao) {
-            // Criar uma célula adicional para exibir a duração
-            let duracaoCelula = document.createElement("td");
-            duracaoCelula.textContent = `Duração: ${objeto.duracao}`;
-            novaLinha.appendChild(duracaoCelula);
-        }
-        // novaLinha.appendChild(criaElemento("Excluir","button"))
-        // novaLinha.appendChild(btnExcluir);
+        let celulaValor = criaElemento(objeto.valor, "td");
+        let celulaDuracao = criaElemento(objeto.duracao, "td");
+        novaLinha.appendChild(celulaValor);
+        novaLinha.appendChild(celulaDuracao);
+
         novaLinha.appendChild(btnValor);
         novaLinha.appendChild(btnDuracao);
         novaLinha.appendChild(btnConcluir);
         tbody.appendChild(novaLinha);
 
-
-        // btnExcluir.addEventListener("click", (evento)=>{
-        //     evento.preventDefault();
-        //     arrayTarefas.splice(index, 1);
-        //     // excluirTarefaArray(item)
-        //     //são dois parents pois o tr>th>button
-        //     evento.target.parentNode.remove();
-        // })
 
         //botaão concluir
         btnConcluir.addEventListener("click", (evento)=>{
@@ -107,37 +95,25 @@ function criaCelula(arrayTarefas) {
         })
 
         //adicionar duração
-        btnDuracao.addEventListener("click", (evento)=>{
-            evento.preventDefault();
-            let duracao = prompt("Insira um valor: ")
+    btnDuracao.addEventListener("click", (evento)=>{
+        evento.preventDefault();
+        let duracao = prompt("Insira uma duração: ")
+        objeto.duracao = duracao;
+        celulaDuracao.textContent = `Duração: ${duracao}`;
 
-            let duracaoCelula = document.createElement("td");
-            duracaoCelula.textContent = `Duração: ${duracao}`;
-    
-            // Inserir a nova célula de valor na mesma linha
-            novaLinha.insertBefore(duracaoCelula, btnValor);
-            // novaLinha.appendChild(criaElemento(objeto.valor, "td"));
-            objeto.duracao = duracao;
-            console.log(arrayTarefas)
-        })
+        console.log(arrayTarefas)
+    })
 
         //adicionar valor
-        btnValor.addEventListener("click", (evento)=>{
-            evento.preventDefault();
-            let valor = prompt("Insira um valor: ")
+    btnValor.addEventListener("click", (evento)=>{
+        evento.preventDefault();
+        let valor = prompt("Insira um valor: ")
+        objeto.valor = valor;
+        celulaValor.textContent = `Valor: ${valor}`;
 
-            let valorCelula = document.createElement("td");
-            valorCelula.textContent = `VALOR: ${valor}`;
-    
-            // Inserir a nova célula de valor na mesma linha
-            novaLinha.insertBefore(valorCelula, btnValor);
-            // novaLinha.appendChild(criaElemento(objeto.valor, "td"));
+        console.log(arrayTarefas)
+    })
 
-            // arrayTarefas.push(objeto.valor)
-            objeto.valor = valor;
-            // arrayTarefas.push(objeto.valor)
-            console.log(arrayTarefas)
-        })
 })
 console.log(arrayTarefas)
 }
@@ -149,16 +125,24 @@ function criaElemento(valor,tag) {
     return elemento;
 }
 
+function criaApenasDescricao (arrayTarefas) {
+    tbody.innerHTML = ""
+
+    arrayTarefas.forEach((objeto, index) => {
+        let novaLinha = document.createElement("tr")
+        //usando o append direto, sem declarar uma variável para o valor 
+        novaLinha.appendChild(criaElemento(objeto.descricao,"td"));
+        novaLinha.appendChild(criaElemento(null,"td"));
+        novaLinha.appendChild(criaElemento(null,"td"));
+        novaLinha.appendChild(criaElemento(objeto.importancia,"td"));
+        tbody.appendChild(novaLinha);
+    })
+}
+
 //funçao para limpar o campo do formulario
 function esvaziaCampos() {
     descricao.value = "";
     autor.value = "";
     departamento.value = "";
     importancia.value = "";
-}
-
-function excluirTarefaArray (tarefa){
-    const indexTarefa = arrayTarefas.indexOf(tarefa)
-    array.splice(indexTarefa,1)
-    criaCelula(arrayTarefas)
 }

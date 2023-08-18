@@ -12,20 +12,28 @@
     <div class="container">
         <form action="#" id="formulario" method="get">
             <fieldset>
-                <label for="descricao">Descrição</label>
-                <input type="text" name="descricao" id="idDescricao" placeholder="Descreva a tarefa">
-            
-                <label for="autor">Autor</label>
-                <input type="text" name="autor" id="idAutor" placeholder="Digite o nome do autor">
+                <div>
+                    <label for="descricao">Descrição</label>
+                    <input type="text" name="descricao" id="idDescricao" placeholder="Insira a tarefa">
+                </div>
+                
+                <div>
+                    <label for="autor">Autor</label>
+                    <input type="text" name="autor" id="idAutor" placeholder="Digite o nome do autor">
+                </div>
 
-                <label for="departamento">Departamento</label>
-                <input type="text" name="departamento" id="idDepartamento" placeholder="Digite o departamento que pertence">
+                <div>
+                    <label for="departamento">Departamento</label>
+                    <input type="text" name="departamento" id="idDepartamento" placeholder="Digite o departamento da tarefa">
+                </div>
 
-                <label for="importancia">Importancia</label>
-                <select name="importancia" id="idImportancia">
-                    <option value="1">Baixa</option>
-                    <option value="2">Média</option>   
-                    <option value="3">Alta</option>
+                <div>
+                    <label for="importancia">Importancia</label>
+                    <select name="importancia" id="idImportancia">
+                        <option value="1-Baixa">Baixa</option>
+                        <option value="2-Média">Média</option>   
+                        <option value="3-Alta">Alta</option>
+                </div>
                 </select>
 
                 <!-- <input type="submit" id="btnAdiciona" value="Adicionar"> -->
@@ -42,7 +50,7 @@
                 <th>Descrição</th>
                 <th>Autor</th>
                 <th>Departamento</th>
-                <th>Importância</th>
+                <th >Importância</th>
             </tr>
         </thead>
         <tbody id="tbody">
