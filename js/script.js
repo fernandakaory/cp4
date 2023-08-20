@@ -7,12 +7,17 @@ const importancia = document.getElementById("idImportancia");
 const cabecalho = document.getElementById("cabecalho");
 const tbody = document.getElementById("tbody");
 const btnAddTarefa = document.querySelector("#btnAddTarefa")
+const mensagemAviso = document.querySelector(".mensagemAviso")
 let arrayTarefas = []
 
 //escutador de eventos ao clicar no botao "adicionar"
 btnAddTarefa.addEventListener("click",(evento)=>{
     evento.preventDefault();
 
+    if(descricao.value == "" || autor.value == "" || departamento.value == "" || importancia.value == "") {
+        mensagemAviso.innerHTML = "PREENCHA TODOS OS CAMPOS!!!"
+    } else {
+        mensagemAviso.innerHTML = ""
     //criando novo objeto
     const novaTarefa = {
         descricao: descricao.value,
@@ -29,6 +34,7 @@ btnAddTarefa.addEventListener("click",(evento)=>{
 
     //chamando a função
     esvaziaCampos();
+}
 })
 
 //quando o botao ordenar for clicado, cria apenas a descrição
