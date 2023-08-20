@@ -69,18 +69,22 @@ function criaCelula(arrayTarefas) {
     arrayTarefas.forEach((objeto, index) => {
         let novaLinha = document.createElement("tr")
       
-        let btnConcluir = document.createElement("button");
-        btnConcluir.textContent = "Concluído"
-        let btnValor = document.createElement("button");
-        btnValor.textContent = "Valor"
-        let btnDuracao = document.createElement("button");
-        btnDuracao.textContent = "Duração"
+        // let btnConcluir = document.createElement("button");
+        // btnConcluir.textContent = "Concluído"
+        // let btnValor = document.createElement("button");
+        // btnValor.textContent = "Valor"
+        // let btnDuracao = document.createElement("button");
+        // btnDuracao.textContent = "Duração"
 
         //usando o append direto, sem declarar uma variável para o valor 
         novaLinha.appendChild(criaElemento(objeto.descricao,"td"));
         novaLinha.appendChild(criaElemento(objeto.autor,"td"));
         novaLinha.appendChild(criaElemento(objeto.departamento,"td"));
         novaLinha.appendChild(criaElemento(objeto.importancia,"td"));
+
+        let btnConcluir = criaElemento("Concluído", "button"); 
+        let btnValor = criaElemento("Valor", "button");
+        let btnDuracao = criaElemento("Duração", "button");       
 
         let celulaValor = criaElemento(objeto.valor, "td");
         let celulaDuracao = criaElemento(objeto.duracao, "td");
