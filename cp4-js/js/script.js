@@ -68,6 +68,8 @@ function atualizaCelula(arrayTarefas) {
     cabecalho.append(criaElemento("Autor","th"))
     cabecalho.append(criaElemento("Departamento","th"))
     cabecalho.append(criaElemento("Importância","th"))
+    cabecalho.append(criaElemento("Valor","th"))
+    cabecalho.append(criaElemento("Duração","th"))
     tbody.innerHTML = ""
 
     //o objeto e seu indice como parametro. cada objeto recebe um indeice
@@ -84,10 +86,14 @@ function atualizaCelula(arrayTarefas) {
         // verifica se o objeto.valor recebeu um valor para colocar na tabela
         if(objeto.valor != null) {
             novaLinha.appendChild(criaElemento(`Valor: ${objeto.valor}`,"td"));
+        } else {
+            novaLinha.appendChild(criaElemento("-","td"));
         }
 
         if(objeto.duracao != null) {
             novaLinha.appendChild(criaElemento(`Duração: ${objeto.duracao}`,"td"));
+        } else {
+            novaLinha.appendChild(criaElemento("-","td"));
         }
         
         // CRIAÇÃO DOS BOTÕES
@@ -108,13 +114,13 @@ function atualizaCelula(arrayTarefas) {
             evento.preventDefault();
             // exclui a linha (novaLinha)
             evento.target.parentNode.remove();
+            apagarTarefa(objeto)
         })
 
         //adicionar duração
         btnDuracao.addEventListener("click", (evento)=>{
             evento.preventDefault();
             adicionaDuracao(objeto)
-
         })
 
         //adicionar valor
@@ -163,6 +169,18 @@ function adicionaDuracao (objeto) {
     objeto.duracao = duracao
     atualizaCelula(arrayTarefas)
 }
+
+// Função para apgar tarefa usando index of e splice
+function apagarTarefa(objeto) {
+    const indiceTarefa = arrayTarefas.indexOf(objeto)
+    if (indiceTarefa !== -1) {
+        arrayTarefas.splice(indiceTarefa, 1); // Remove o objeto do array
+        atualizaCelula(arrayTarefas); // Atualiza a tabela
+        if(arrayTarefas.length <=0){
+            cabecalho.innerHTML = ""
+        }
+
+}}
 
 //funçao para limpar o campo do formulario
 function esvaziaCampos() {
