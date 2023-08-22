@@ -24,13 +24,13 @@ btnAddTarefa.addEventListener("click",(evento)=>{
         autor: autor.value,
         departamento: departamento.value,
         importancia: importancia.value,
-        valor: "Valor não definido", // Definindo o valor como nulo
-        duracao: "Duração não definida", // Definindo a duração como nula
+        // valor: "Valor não definido",
+        // duracao: "Duração não definida",
     };
 
     arrayTarefas.push(novaTarefa)
     //chamando a funçao
-    criaCelula(arrayTarefas)
+    atualizaCelula(arrayTarefas)
 
     //chamando a função
     esvaziaCampos();
@@ -47,106 +47,121 @@ btnOrdenar.addEventListener("click", (evento) => {
 });
 
 
-
-
 //FUNÇÔES
 function ordenarPorImportancia(array) {
     array.sort((a, b) => {
        const valorA = a.importancia.split("-");
        const valorB = b.importancia.split("-");
        //nesse ordem pois quero em decrescente
+       //[0] INDICE DOS NÚMEROS
        return parseInt(valorB[0]) - parseInt(valorA[0])
     });
 }
 
-
 //função para criar celula inteira de tarefa
 //estou usando os botoes dentro do foreach porque dai eu não preciso especificar qual item eu quero manipular
-function criaCelula(arrayTarefas) {
+function atualizaCelula(arrayTarefas) {
+    //CRIAÇÃO DO HEAD DA TABELA
+    // PARA NÃO APAGAR O CABEÇALHO CASO EU CLIQUE NA ORDENAR POR IMPORTÃNCIA
+    cabecalho.innerHTML = ""
+    cabecalho.append(criaElemento("Descrição","th"))
+    cabecalho.append(criaElemento("Autor","th"))
+    cabecalho.append(criaElemento("Departamento","th"))
+    cabecalho.append(criaElemento("Importância","th"))
     tbody.innerHTML = ""
 
     //o objeto e seu indice como parametro. cada objeto recebe um indeice
-    arrayTarefas.forEach((objeto, index) => {
+    arrayTarefas.forEach((objeto) => {
         let novaLinha = document.createElement("tr")
       
-        // let btnConcluir = document.createElement("button");
-        // btnConcluir.textContent = "Concluído"
-        // let btnValor = document.createElement("button");
-        // btnValor.textContent = "Valor"
-        // let btnDuracao = document.createElement("button");
-        // btnDuracao.textContent = "Duração"
-
+        // CRIAÇÃO DOS ELEMENTOS DA TABELA QUE PERTENCEM AO BODY EM UMA LINHA
         //usando o append direto, sem declarar uma variável para o valor 
         novaLinha.appendChild(criaElemento(objeto.descricao,"td"));
         novaLinha.appendChild(criaElemento(objeto.autor,"td"));
         novaLinha.appendChild(criaElemento(objeto.departamento,"td"));
         novaLinha.appendChild(criaElemento(objeto.importancia,"td"));
 
+        // verifica se o objeto.valor recebeu um valor para colocar na tabela
+        if(objeto.valor != null) {
+            novaLinha.appendChild(criaElemento(`Valor: ${objeto.valor}`,"td"));
+        }
+
+        if(objeto.duracao != null) {
+            novaLinha.appendChild(criaElemento(`Duração: ${objeto.duracao}`,"td"));
+        }
+        
+        // CRIAÇÃO DOS BOTÕES
         let btnConcluir = criaElemento("Concluído", "button"); 
         let btnValor = criaElemento("Valor", "button");
         let btnDuracao = criaElemento("Duração", "button");       
 
-        let celulaValor = criaElemento(objeto.valor, "td");
-        let celulaDuracao = criaElemento(objeto.duracao, "td");
-        novaLinha.appendChild(celulaValor);
-        novaLinha.appendChild(celulaDuracao);
-
         novaLinha.appendChild(btnValor);
         novaLinha.appendChild(btnDuracao);
         novaLinha.appendChild(btnConcluir);
+
+        //COLOCANDO A NOVALINHA INTEIRA NO BODY COM TODOS OS ELEMENTOS
         tbody.appendChild(novaLinha);
 
 
         //botaão concluir
         btnConcluir.addEventListener("click", (evento)=>{
             evento.preventDefault();
-            //são dois parents pois o tr>th>button
+            // exclui a linha (novaLinha)
             evento.target.parentNode.remove();
         })
 
         //adicionar duração
-    btnDuracao.addEventListener("click", (evento)=>{
-        evento.preventDefault();
-        let duracao = prompt("Insira uma duração: ")
-        objeto.duracao = duracao;
-        celulaDuracao.textContent = `Duração: ${duracao}`;
+        btnDuracao.addEventListener("click", (evento)=>{
+            evento.preventDefault();
+            adicionaDuracao(objeto)
 
-        console.log(arrayTarefas)
-    })
+        })
 
         //adicionar valor
-    btnValor.addEventListener("click", (evento)=>{
-        evento.preventDefault();
-        let valor = prompt("Insira um valor: ")
-        objeto.valor = valor;
-        celulaValor.textContent = `Valor: ${valor}`;
-
-        console.log(arrayTarefas)
-    })
+        btnValor.addEventListener("click", (evento)=>{
+            evento.preventDefault();
+            adicionaValor(objeto)
+        })
 
 })
 console.log(arrayTarefas)
 }
 
-//função para criar nova coluna
-function criaElemento(valor,tag) {
+//função para criar novo elemento
+function criaElemento(conteudo,tag) {
     let elemento = document.createElement(tag);
-    elemento.textContent = valor;
+    elemento.textContent = conteudo;
     return elemento;
 }
 
+//cria apenas a descrição e a importancia, deixando os outros campos vazios
 function criaApenasDescricao (arrayTarefas) {
     tbody.innerHTML = ""
+    cabecalho.innerHTML = ""
+    //CRIANDO CABECALHO APENAS DA DESCRIÇÃO E IMPIORTANCIA
+    cabecalho.append(criaElemento("Descrição","th"))
+    cabecalho.append(criaElemento("Importância","th"))
 
-    arrayTarefas.forEach((objeto, index) => {
+    arrayTarefas.forEach((objeto) => {
         let novaLinha = document.createElement("tr")
+      
         //usando o append direto, sem declarar uma variável para o valor 
         novaLinha.appendChild(criaElemento(objeto.descricao,"td"));
-        novaLinha.appendChild(criaElemento(null,"td"));
-        novaLinha.appendChild(criaElemento(null,"td"));
         novaLinha.appendChild(criaElemento(objeto.importancia,"td"));
         tbody.appendChild(novaLinha);
     })
+}
+
+function adicionaValor (objeto) {
+    const valor = prompt("Digite um valor: ");
+    objeto.valor = valor
+    atualizaCelula(arrayTarefas)
+}
+
+function adicionaDuracao (objeto) {
+    const duracao = prompt("Digite uma duração: ");
+    objeto.duracao = duracao
+    atualizaCelula(arrayTarefas)
 }
 
 //funçao para limpar o campo do formulario
