@@ -1,4 +1,4 @@
-//capturando os valores dos inputs
+//recuperando os elementos html 
 const formulario = document.getElementById("formulario");
 const descricao = document.getElementById("idDescricao");
 const autor = document.getElementById("idAutor");
@@ -24,8 +24,6 @@ btnAddTarefa.addEventListener("click",(evento)=>{
         autor: autor.value,
         departamento: departamento.value,
         importancia: importancia.value,
-        // valor: "Valor não definido",
-        // duracao: "Duração não definida",
     };
 
     arrayTarefas.push(novaTarefa)
@@ -85,7 +83,7 @@ function atualizaCelula(arrayTarefas) {
 
         // verifica se o objeto.valor recebeu um valor para colocar na tabela
         if(objeto.valor != null) {
-            novaLinha.appendChild(criaElemento(`Valor: ${objeto.valor}`,"td"));
+            novaLinha.appendChild(criaElemento(`RS ${objeto.valor}`,"td"));
         } else {
             novaLinha.appendChild(criaElemento("-","td"));
         }
@@ -99,7 +97,7 @@ function atualizaCelula(arrayTarefas) {
         // CRIAÇÃO DOS BOTÕES
         let btnConcluir = criaElemento("Concluído", "button"); 
         let btnValor = criaElemento("Valor", "button");
-        let btnDuracao = criaElemento("Duração", "button");       
+        let btnDuracao = criaElemento("Duração", "button");  
 
         novaLinha.appendChild(btnValor);
         novaLinha.appendChild(btnDuracao);
@@ -174,8 +172,8 @@ function adicionaDuracao (objeto) {
 function apagarTarefa(objeto) {
     const indiceTarefa = arrayTarefas.indexOf(objeto)
     if (indiceTarefa !== -1) {
-        arrayTarefas.splice(indiceTarefa, 1); // Remove o objeto do array
-        atualizaCelula(arrayTarefas); // Atualiza a tabela
+        arrayTarefas.splice(indiceTarefa, 1); 
+        atualizaCelula(arrayTarefas); 
         if(arrayTarefas.length <=0){
             cabecalho.innerHTML = ""
         }
