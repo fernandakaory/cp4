@@ -73,6 +73,7 @@ function atualizaCelula(arrayTarefas) {
     //o objeto e seu indice como parametro. cada objeto recebe um indeice
     arrayTarefas.forEach((objeto) => {
         let novaLinha = document.createElement("tr")
+        let colunaBotoes = document.createElement("td")
       
         // CRIAÇÃO DOS ELEMENTOS DA TABELA QUE PERTENCEM AO BODY EM UMA LINHA
         //usando o append direto, sem declarar uma variável para o valor 
@@ -99,9 +100,10 @@ function atualizaCelula(arrayTarefas) {
         let btnValor = criaElemento("Valor", "button");
         let btnDuracao = criaElemento("Duração", "button");  
 
-        novaLinha.appendChild(btnValor);
-        novaLinha.appendChild(btnDuracao);
-        novaLinha.appendChild(btnConcluir);
+        colunaBotoes.appendChild(btnValor);
+        colunaBotoes.appendChild(btnDuracao);
+        colunaBotoes.appendChild(btnConcluir);
+        novaLinha.appendChild(colunaBotoes)
 
         //COLOCANDO A NOVALINHA INTEIRA NO BODY COM TODOS OS ELEMENTOS
         tbody.appendChild(novaLinha);
@@ -111,7 +113,7 @@ function atualizaCelula(arrayTarefas) {
         btnConcluir.addEventListener("click", (evento)=>{
             evento.preventDefault();
             // exclui a linha (novaLinha)
-            evento.target.parentNode.remove();
+            evento.target.parentNode.parentNode.remove();
             apagarTarefa(objeto)
         })
 

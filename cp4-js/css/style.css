@@ -26,6 +26,16 @@ input {
     background-color: transparent;
 }
 
+#divButton {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+#btnOrdenar {
+    margin-bottom: 10px;
+}
+
 button {
     border-radius: 5px;
     background-color: #f569c9;
@@ -33,4 +43,23 @@ button {
 
 table, th, tr,td {
     border: 1px solid black;
+}
+
+table {
+    margin: auto;
+}
+
+table td {
+    text-align: center;
+    padding: 0 5px;
+}
+
+h2 {
+    text-align: center;
+}
+
+td button {
+    display: block;
+    margin-bottom: 5px;
+    width: 4.5rem;
 }
