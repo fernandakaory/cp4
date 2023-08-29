@@ -1,5 +1,5 @@
 body {
-    background-color: #fcdef3;
+    background-color: #e3e6e4;
 }
 
 h1 {
@@ -18,7 +18,9 @@ fieldset {
 }
 
 input {
-    border-radius: 8px;
+    width: 500px;
+    display: block;
+    border-radius: 5px;
     background-color: transparent;
 }
 
@@ -28,8 +30,8 @@ input {
 
 #divButton {
     display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; 
+    align-items: center; 
 }
 
 #btnOrdenar {
@@ -38,11 +40,17 @@ input {
 
 button {
     border-radius: 5px;
-    background-color: #f569c9;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px;
+}
+
+select {
+    border-radius: 5px;
 }
 
 table, th, tr,td {
-    border: 1px solid black;
+    border: 1px solid #000000;
 }
 
 table {
@@ -60,6 +68,14 @@ h2 {
 
 td button {
     display: block;
-    margin-bottom: 5px;
+    margin: 5px 0 5px 0;
     width: 4.5rem;
+    padding: 5px;
+}
+
+button {
+    border-radius: 5px;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px;
 }
