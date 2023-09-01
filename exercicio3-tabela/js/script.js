@@ -84,13 +84,13 @@ function atualizaCelula(arrayTarefas) {
 
         // verifica se o objeto.valor recebeu um valor para colocar na tabela
         if(objeto.valor != null) {
-            novaLinha.appendChild(criaElemento(`RS ${objeto.valor}`,"td"));
+            novaLinha.appendChild(criaElemento(objeto.valor,"td"));
         } else {
             novaLinha.appendChild(criaElemento("-","td"));
         }
 
         if(objeto.duracao != null) {
-            novaLinha.appendChild(criaElemento(`Duração: ${objeto.duracao}`,"td"));
+            novaLinha.appendChild(criaElemento(objeto.duracao,"td"));
         } else {
             novaLinha.appendChild(criaElemento("-","td"));
         }
